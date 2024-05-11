@@ -36,14 +36,32 @@ def create_credentials_file(user, passw, domain, credentials_file):
         print("File created")
     except Exception as error:
         print(f"Can't create file: {error}")
+# ------------------------CREATE FSTAB TEMP FILE---------------------------------
+def fstab_temp():
+    try:
+        with open("/etc/fstab", "r") as file:
+            fstab = file.read()
+        with open("fstab-temp", "w+") as file:
+            file.write(fstab)
+        print("Fstab temp created...")
+    except Exception as error:
+        print(f"Can't create fstab temp copy {error}")
 
+# ------------------------DELETE FSTAB TEMP FILE------------------------------------
+def delete_fstab_temp():
+    try:
+        os.remove("fstab-temp")
+        print("Fstab temp deleted...")
+    except Exception as error:
+        print(f"Can't delete fstab temp {error}, please delet it manually")
 
 # ---------------------------MODIFYING FSTAB----------------------------------
-def fstab_modify(entry):
-    try:
+def fstab_modify(entry):    
+        fstab_temp()
+        print("Temporal fstab copy created")
         # Read existing entries from fstab
         with open("/etc/fstab", "r") as f:
-            lines = f.readlines()
+            lines = f.readlines()         
 
         # Check if the entry already exists
         if any(line.strip() == entry.strip() for line in lines):
@@ -56,12 +74,10 @@ def fstab_modify(entry):
                 f.write(entry)
                 print(f"New entry on /etc/fstab for {entry} added.")
 
-            # # Print the updated contents of fstab
-            # print("Updated /etc/fstab:")
-            # with open("/etc/fstab", "r") as f:
-            #     print(f.read())
-    except Exception as e:
-        print(f"Error at adding the entry on /etc/fstab: {e}")
+            # Print the updated contents of fstab
+            print("Updated /etc/fstab:")
+            with open("/etc/fstab", "r") as f:
+                print(f.read())
 
 
 # ----------------------SHARE FOLDER CHECK-----------------------------
@@ -84,7 +100,7 @@ def validate_fstab():
         # Mount all entrances in /etc/fstab
         mount_result = os.system("mount -a")
         if mount_result != 0:
-            print("Error mounting entries in /etc/fstab.")
+            print("Error mounting entries in /etc/fstab.")            
             return False
         else:
             print("Entries successfully mounted in /etc/fstab.")
@@ -95,17 +111,28 @@ def validate_fstab():
 
 
 # --------------------------RETURN TO BEGINNING IF ERROR----------------------
-def cleanup_func(credentials_file, fstab_entr, fstab_loc):
+def cleanup_func(credentials_file, fstab_entr, fstab_loc, mnt_fol):
     if os.path.exists(credentials_file):
         os.remove(credentials_file)
         print("Removed credentials file")
+    if os.path.exists(mnt_fol):
+        os.rmdir(mnt_fol)
+        print("Removed mount folder created.")
 
     with open(fstab_loc, "r") as f:
         lines = f.readlines()
     with open(fstab_loc, "w") as f:
         for line in lines:
-            if line.strip() == fstab_entr.strip():
+            if not line.startswith(fstab_entr):
                 f.write(line)
+        print("Removed entry from /etc/fstab.")
+        print("validating /etc/fstab: ")
+        if validate_fstab():
+            print("/etc/fstab validated.")
+            delete_fstab_temp()
+            print("Removed temporary fstab.")
+        else:
+            print("/etc/fstab not validated. Please, check /etc/fstab!!!!")
 
 
 # ----------------------------MAIN--------------------------------------------
@@ -121,7 +148,7 @@ def main():
     credentials_filename = samba_server_ip + "_credentials"
     fstab_location = "/etc/fstab"
     credentials_filepath = samba_path_credentials + "/" + credentials_filename
-    fstab_entry = f"//{samba_server_ip}/{share_name} {mnt_folder} cifs rw,x-systemd.automount,credentials={credentials_filepath},uid=1000,gid=1000 0 0\n"
+    fstab_entry = f"//{samba_server_ip}/{share_name} {mnt_folder} cifs rw,x-systemd.automount,credentials={credentials_filepath},uid={samba_user},gid={samba_user} 0 0\n"
     ###########################################################################
 
     print("Creating the folder...")
@@ -137,6 +164,7 @@ def main():
     check_folder_share(mnt_folder)
 
     print("Adding fstab entry...")
+
     time.sleep(1)
     fstab_modify(fstab_entry)
 
@@ -147,7 +175,7 @@ def main():
             "All fstab entries validated and mounted :) Enjoy your new SMB automount!"
         )
     else:
-        cleanup_func(credentials_filepath, fstab_entry, fstab_location)
+        cleanup_func(credentials_filepath, fstab_entry, fstab_location, mnt_folder)
 
 
 if __name__ == "__main__":
