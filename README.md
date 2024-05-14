@@ -6,5 +6,5 @@
 The project will work on the next activities:
 - [x] Python script to auto-mount Samba share with provided configuration parameters
 - [ ] Python script to create Samba share
-- [ ] Python PyQt6 GUI to mount Samba shares
-- [ ] Python PyQt6 GUI to create Samba shares.
+- [ ] Python PySide6 GUI to mount Samba shares
+- [ ] Python PySide6 GUI to create Samba shares.
