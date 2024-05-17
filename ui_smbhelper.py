@@ -18,13 +18,14 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QGridLayout, QLabel, QLineEdit,
     QMainWindow, QMenu, QMenuBar, QPushButton,
-    QSizePolicy, QStatusBar, QVBoxLayout, QWidget)
+    QSizePolicy, QStatusBar, QTextEdit, QVBoxLayout,
+    QWidget, QMessageBox)
 
 class Ui_SMBWindow(object):
     def setupUi(self, SMBWindow):
         if not SMBWindow.objectName():
             SMBWindow.setObjectName(u"SMBWindow")
-        SMBWindow.resize(712, 490)
+        SMBWindow.resize(767, 457)
         self.actionQuit = QAction(SMBWindow)
         self.actionQuit.setObjectName(u"actionQuit")
         self.actionAbout = QAction(SMBWindow)
@@ -81,6 +82,8 @@ class Ui_SMBWindow(object):
 
         self.line_samba_ip = QLineEdit(self.centralwidget)
         self.line_samba_ip.setObjectName(u"line_samba_ip")
+        
+
 
         self.gridLayout.addWidget(self.line_samba_ip, 1, 1, 1, 2)
 
@@ -120,6 +123,8 @@ class Ui_SMBWindow(object):
 
         self.line_samba_pass = QLineEdit(self.centralwidget)
         self.line_samba_pass.setObjectName(u"line_samba_pass")
+        self.line_samba_pass.EchoMode.Password
+
         sizePolicy2.setHeightForWidth(self.line_samba_pass.sizePolicy().hasHeightForWidth())
         self.line_samba_pass.setSizePolicy(sizePolicy2)
 
@@ -135,16 +140,11 @@ class Ui_SMBWindow(object):
 
         self.verticalLayout.addLayout(self.gridLayout)
 
-        self.line_detail = QLineEdit(self.centralwidget)
-        self.line_detail.setObjectName(u"line_detail")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.line_detail.sizePolicy().hasHeightForWidth())
-        self.line_detail.setSizePolicy(sizePolicy3)
-        self.line_detail.setMinimumSize(QSize(0, 300))
+        self.text_edit = QTextEdit(self.centralwidget)
+        self.text_edit.setObjectName(u"text_edit")
+        self.text_edit.setReadOnly(True)
 
-        self.verticalLayout.addWidget(self.line_detail)
+        self.verticalLayout.addWidget(self.text_edit)
 
 
         self.gridLayout_2.addLayout(self.verticalLayout, 0, 0, 1, 3)
@@ -160,7 +160,7 @@ class Ui_SMBWindow(object):
         SMBWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(SMBWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 712, 22))
+        self.menubar.setGeometry(QRect(0, 0, 767, 22))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
         self.menuHelp = QMenu(self.menubar)
@@ -178,6 +178,11 @@ class Ui_SMBWindow(object):
         self.retranslateUi(SMBWindow)
 
         QMetaObject.connectSlotsByName(SMBWindow)
+
+
+
+
+
     # setupUi
 
     def retranslateUi(self, SMBWindow):
@@ -192,7 +197,6 @@ class Ui_SMBWindow(object):
         self.label_smb_ip.setText(QCoreApplication.translate("SMBWindow", u"Samba Server IP Address: ", None))
         self.label_folder.setText(QCoreApplication.translate("SMBWindow", u"Local Folder Address: ", None))
         self.label_user.setText(QCoreApplication.translate("SMBWindow", u"Samba Username:", None))
-        self.line_detail.setText("")
         self.button_cancel.setText(QCoreApplication.translate("SMBWindow", u"Quit", None))
         self.menuFile.setTitle(QCoreApplication.translate("SMBWindow", u"File", None))
         self.menuHelp.setTitle(QCoreApplication.translate("SMBWindow", u"Help", None))
