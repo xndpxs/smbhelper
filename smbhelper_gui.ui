@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>767</width>
-    <height>457</height>
+    <width>852</width>
+    <height>486</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -189,7 +189,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>767</width>
+     <width>852</width>
      <height>22</height>
     </rect>
    </property>
@@ -220,6 +220,18 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>line_local_folder</tabstop>
+  <tabstop>button_search</tabstop>
+  <tabstop>line_samba_ip</tabstop>
+  <tabstop>line_samba_share</tabstop>
+  <tabstop>line_samba_user</tabstop>
+  <tabstop>line_samba_pass</tabstop>
+  <tabstop>line_samba_domain</tabstop>
+  <tabstop>text_edit</tabstop>
+  <tabstop>button_cancel</tabstop>
+  <tabstop>button_apply</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

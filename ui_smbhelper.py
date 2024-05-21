@@ -19,13 +19,13 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
 from PySide6.QtWidgets import (QApplication, QGridLayout, QLabel, QLineEdit,
     QMainWindow, QMenu, QMenuBar, QPushButton,
     QSizePolicy, QStatusBar, QTextEdit, QVBoxLayout,
-    QWidget, QMessageBox)
+    QWidget)
 
 class Ui_SMBWindow(object):
     def setupUi(self, SMBWindow):
         if not SMBWindow.objectName():
             SMBWindow.setObjectName(u"SMBWindow")
-        SMBWindow.resize(767, 457)
+        SMBWindow.resize(852, 486)
         self.actionQuit = QAction(SMBWindow)
         self.actionQuit.setObjectName(u"actionQuit")
         self.actionAbout = QAction(SMBWindow)
@@ -82,8 +82,6 @@ class Ui_SMBWindow(object):
 
         self.line_samba_ip = QLineEdit(self.centralwidget)
         self.line_samba_ip.setObjectName(u"line_samba_ip")
-        
-
 
         self.gridLayout.addWidget(self.line_samba_ip, 1, 1, 1, 2)
 
@@ -123,8 +121,6 @@ class Ui_SMBWindow(object):
 
         self.line_samba_pass = QLineEdit(self.centralwidget)
         self.line_samba_pass.setObjectName(u"line_samba_pass")
-        self.line_samba_pass.EchoMode.Password
-
         sizePolicy2.setHeightForWidth(self.line_samba_pass.sizePolicy().hasHeightForWidth())
         self.line_samba_pass.setSizePolicy(sizePolicy2)
 
@@ -160,7 +156,7 @@ class Ui_SMBWindow(object):
         SMBWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(SMBWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 767, 22))
+        self.menubar.setGeometry(QRect(0, 0, 852, 22))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
         self.menuHelp = QMenu(self.menubar)
@@ -169,6 +165,15 @@ class Ui_SMBWindow(object):
         self.statusbar = QStatusBar(SMBWindow)
         self.statusbar.setObjectName(u"statusbar")
         SMBWindow.setStatusBar(self.statusbar)
+        QWidget.setTabOrder(self.line_local_folder, self.button_search)
+        QWidget.setTabOrder(self.button_search, self.line_samba_ip)
+        QWidget.setTabOrder(self.line_samba_ip, self.line_samba_share)
+        QWidget.setTabOrder(self.line_samba_share, self.line_samba_user)
+        QWidget.setTabOrder(self.line_samba_user, self.line_samba_pass)
+        QWidget.setTabOrder(self.line_samba_pass, self.line_samba_domain)
+        QWidget.setTabOrder(self.line_samba_domain, self.text_edit)
+        QWidget.setTabOrder(self.text_edit, self.button_cancel)
+        QWidget.setTabOrder(self.button_cancel, self.button_apply)
 
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
@@ -178,11 +183,6 @@ class Ui_SMBWindow(object):
         self.retranslateUi(SMBWindow)
 
         QMetaObject.connectSlotsByName(SMBWindow)
-
-
-
-
-
     # setupUi
 
     def retranslateUi(self, SMBWindow):
