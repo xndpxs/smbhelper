@@ -1,0 +1,11 @@
+# <file system>             <mount point>  <type>  <options>  <dump>  <pass>
+UUID=E298-1D6E                            /efi           vfat    fmask=0137,dmask=0027 0 2
+UUID=e938fbd1-a1a9-47ea-a366-e81e6b322fde /              btrfs   subvol=/@,noatime,compress=zstd 0 0
+UUID=e938fbd1-a1a9-47ea-a366-e81e6b322fde /home          btrfs   subvol=/@home,noatime,compress=zstd 0 0
+UUID=e938fbd1-a1a9-47ea-a366-e81e6b322fde /var/cache     btrfs   subvol=/@cache,noatime,compress=zstd 0 0
+UUID=e938fbd1-a1a9-47ea-a366-e81e6b322fde /var/log       btrfs   subvol=/@log,noatime,compress=zstd 0 0
+tmpfs                                     /tmp           tmpfs   defaults,noatime,mode=1777 0 0
+LABEL=libreria /mnt/libreria auto nosuid,nodev,nofail,x-gvfs-show,x-gvfs-name=libreria 0 0
+LABEL=vms /mnt/vms auto nosuid,nodev,nofail,x-gvfs-show,x-gvfs-name=vms 0 0
+LABEL=descargas /mnt/descargas auto nosuid,nodev,nofail,x-gvfs-show,x-gvfs-name=descargas 0 0
+//192.168.100.3/gunther_descargas /mnt/gunther_descargas cifs rw,x-systemd.automount,credentials=/etc/samba/credentials/192.168.100.3_credentials,uid=1000,gid=1000 0 0

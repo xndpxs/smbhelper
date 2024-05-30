@@ -39,9 +39,14 @@ class SmbHelper(QMainWindow, Ui_SMBWindow):
         self.credentials_filepath = (
             self.samba_path_credentials + "/" + self.credentials_filename
         )
-        self.uid = getpwnam(f"{self.samba_user}").pw_uid
-        self.gid = getpwnam(f"{self.samba_user}").pw_gid
-        self.fstab_entry = f"//{self.samba_ip}/{self.samba_share} {self.samba_path} cifs rw,x-systemd.automount,credentials={self.credentials_filepath}, uid={self.uid},gid={self.gid} 0 0"
+        try:
+            self.uid = getpwnam(f"{self.samba_user}").pw_uid
+            self.gid = getpwnam(f"{self.samba_user}").pw_gid
+        except KeyError as e:
+            self.text_edit.append(f"User {e} does not exist. Program ended.")
+            self.button_apply.setEnabled(True)
+
+        self.fstab_entry = f"//{self.samba_ip}/{self.samba_share} {self.samba_path} cifs rw,x-systemd.automount,credentials={self.credentials_filepath},uid={self.uid},gid={self.gid} 0 0"
         ############################################################################
 
         # # Debugging

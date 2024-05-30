@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'smbhelper_gui.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.7.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -123,6 +123,7 @@ class Ui_SMBWindow(object):
         self.line_samba_pass.setObjectName(u"line_samba_pass")
         sizePolicy2.setHeightForWidth(self.line_samba_pass.sizePolicy().hasHeightForWidth())
         self.line_samba_pass.setSizePolicy(sizePolicy2)
+        self.line_samba_pass.setEchoMode(QLineEdit.Password)
 
         self.gridLayout.addWidget(self.line_samba_pass, 1, 4, 1, 1)
 
