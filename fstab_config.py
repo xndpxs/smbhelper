@@ -36,8 +36,8 @@ class FstabConfig:
 
     def fstab_validation(self):
         self.sf.text_edit.append("Validating fstab...")
+        os.system("systemctl daemon-reload")
         try:
-            os.system("systemctl daemon-reload")
             os.system("mount -a")
             self.sf.text_edit.append(
                 "Fstab validation successful, enjoy your mount :D...\n"

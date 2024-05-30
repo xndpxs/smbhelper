@@ -9,3 +9,4 @@ LABEL=libreria /mnt/libreria auto nosuid,nodev,nofail,x-gvfs-show,x-gvfs-name=li
 LABEL=vms /mnt/vms auto nosuid,nodev,nofail,x-gvfs-show,x-gvfs-name=vms 0 0
 LABEL=descargas /mnt/descargas auto nosuid,nodev,nofail,x-gvfs-show,x-gvfs-name=descargas 0 0
 //192.168.100.3/gunther_descargas /mnt/gunther_descargas cifs rw,x-systemd.automount,credentials=/etc/samba/credentials/192.168.100.3_credentials,uid=1000,gid=1000 0 0
+//192.168.100.3/gunther_descargas /mnt/gunther_descargas cifs rw,x-systemd.automount,credentials=/etc/samba/credentials,sfd=1000,gid=1000 0 0

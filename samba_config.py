@@ -23,7 +23,7 @@ class SambaConfig:
         msg_credentials = QMessageBox.warning(
             parent,
             "Overwrite Credentials File",
-            "File already exists. Do you want to overwrite it?",
+            "File for credentials already exists. Do you want to overwrite it?",
             QMessageBox.Yes | QMessageBox.No,
         )
         if msg_credentials == QMessageBox.Yes:
