@@ -35,7 +35,7 @@ class SambaConfig:
         if Path(self.sf.credentials_filepath).exists():
             self.msg_overwrite_credentials_file(self.sf)
         else:
-            self.sf.text_edit.append("Writing credentials...\n")
+            self.sf.text_edit.append("Writing credentials...")
             with open(Path(self.sf.credentials_filepath), "w", 0o600) as file:
                 file.write(f"username={self.sf.samba_user}\n")
                 file.write(f"password={self.sf.samba_pass}\n")

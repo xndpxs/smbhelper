@@ -1,4 +1,5 @@
-from PySide6.QtWidgets import QMainWindow, QFileDialog
+from PySide6.QtWidgets import QMainWindow, QFileDialog, QApplication
+
 from samba_config import SambaConfig
 from fstab_config import FstabConfig
 from ui_smbwindow import Ui_SMBWindow
@@ -28,13 +29,20 @@ class SmbHelper(QMainWindow, Ui_SMBWindow):
     def apply_clicked(self):
         self.button_apply.setEnabled(False)
         self.text_edit.append("button clicked...")
+        QApplication.processEvents()
         self.get_variables()
-        # If user doesn't exist program ends.
         if self.get_uid_gid():
             self.samba_config.create_credentials_folder()
+            QApplication.processEvents()
             self.samba_config.create_credentials_file()
+            QApplication.processEvents()
             self.fstab_config.fstab_modify()
-            self.fstab_config.fstab_validation()
+            QApplication.processEvents()
+        if not self.fstab_config.fstab_validation():
+            QApplication.processEvents()
+            self.samba_config.delete_created_files()
+            QApplication.processEvents()
+        self.button_apply.setEnabled(True)
 
         # FUNCTIONS
 
@@ -61,7 +69,7 @@ class SmbHelper(QMainWindow, Ui_SMBWindow):
         try:
             self.uid = getpwnam(self.samba_user).pw_uid
             self.gid = getpwnam(self.samba_user).pw_gid
-            self.fstab_entry = f"//{self.samba_ip}/{self.samba_share} {self.samba_path} cifs rw,x-systemd.automount,credentials={self.credentials_filepath},uid={self.uid},gid={self.gid} 0 0"
+            self.fstab_entry = f"//{self.samba_ip}/{self.samba_share} {self.samba_path} cifs rw,x-systemd.automount,credentials={self.credentials_filepath},uid={self.uid},gid={self.gid} 0 0\n"
             return True
         except KeyError:
             self.text_edit.append(
