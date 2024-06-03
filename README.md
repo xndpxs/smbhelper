@@ -1,7 +1,8 @@
 # SMBHelper
 ## **Work in progress and still unstable, use at your own risk**
 <br>
-SMBHelper is a utility designed to automatically mounting Samba shares. This tool will simplify the process of mounting Samba shares by providing an intuitive interface to  mount these shares on the local system.
+![smbhelper_gui](https://github.com/xndpxs/smbhelper/smbhelper_gui.png)
+SMBHelper is a utility designed to simplify the automatic mounting of Samba shares following the guidelines outlined in the Arch Wiki. This tool streamlines the process of mounting Samba shares by providing an intuitive interface for mounting these shares on the local system.
 
 ### To-Do Activities
 The project will work on the next activities:
