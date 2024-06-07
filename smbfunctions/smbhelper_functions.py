@@ -1,8 +1,7 @@
 from PySide6.QtWidgets import QMainWindow, QFileDialog, QApplication
-
-from samba_config import SambaConfig
-from fstab_config import FstabConfig
-from ui_smbwindow import Ui_SMBWindow
+from smbfunctions.samba_config import SambaConfig
+from smbfunctions.fstab_config import FstabConfig
+from ui.ui_smbwindow import Ui_SMBWindow
 from pwd import getpwnam
 
 

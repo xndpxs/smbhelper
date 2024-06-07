@@ -14,7 +14,7 @@ class FstabConfig:
         try:
             shutil.copyfile("/etc/fstab", "/etc/fstab.bak")
             self.sf.text_edit.append("Fstab backup created...")
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             self.sf.text_edit.append("No /etc/fstab file found.")
         except IOError as e:
             self.sf.text_edit.append(f"Failed to create temporary backup of fstab: {e}")
@@ -24,10 +24,10 @@ class FstabConfig:
             Path("/etc/fstab.bak").unlink()
             self.sf.text_edit.append("Fstab temp deleted...")
             self.sf.button_apply.setEnabled(True)
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             self.sf.text_edit.append("No backup found...")
         except OSError as e:
-            self.sf.text_edit.append("Failed to delete backup of fstab: {e}")
+            self.sf.text_edit.append(f"Failed to delete backup of fstab: {e}")
 
     def fstab_modify(self):
         try:
