@@ -3,6 +3,8 @@ import subprocess
 import os
 import shutil
 
+from smbfunctions.create_samba_share import validate_fstab_entry
+
 
 class FstabConfig:
     def __init__(self, sf):
@@ -30,45 +32,48 @@ class FstabConfig:
             self.sf.text_edit.append(f"Failed to delete backup of fstab: {e}")
 
     def fstab_modify(self):
-        try:
-            self.sf.text_edit.append("Modifying fstab...")
-            self.fstab_create_temp()
+        if validate_fstab_entry:
+            try:
+                self.sf.text_edit.append("Modifying fstab...")
+                self.fstab_create_temp()
 
-            with open(self.sf.fstab_location, "r") as f:
-                lines = f.readlines()
-                if any(line.strip() == self.sf.fstab_entry.strip() for line in lines):
-                    self.sf.text_edit.append(
-                        f"A line for {self.sf.fstab_entry} already exists. New entry not added."
-                    )
-                else:
-                    self.sf.text_edit.append("Appending to fstab...")
-                    with open(self.sf.fstab_location, "a") as file:
-                        file.write(self.sf.fstab_entry.strip())
-        except FileNotFoundError:
-            self.sf.text_edit.append(f"Error: {self.sf.fstab_location} not found.")
-        except IOError as e:
-            self.sf.text_edit.append(f"IOError occurred while modifying fstab: {e}")
+                with open(self.sf.fstab_location, "r") as f:
+                    lines = f.readlines()
+                    if any(
+                        line.strip() == self.sf.fstab_entry.strip() for line in lines
+                    ):
+                        self.sf.text_edit.append(
+                            f"A line for {self.sf.fstab_entry} already exists. New entry not added."
+                        )
+                    else:
+                        self.sf.text_edit.append("Appending to fstab...")
+                        with open(self.sf.fstab_location, "a") as file:
+                            file.write(self.sf.fstab_entry.strip())
+            except FileNotFoundError:
+                self.sf.text_edit.append(f"Error: {self.sf.fstab_location} not found.")
+            except IOError as e:
+                self.sf.text_edit.append(f"IOError occurred while modifying fstab: {e}")
 
-    def fstab_validation(self):
-        self.sf.text_edit.append("Validating fstab...")
+    # def fstab_validation(self):
+    #     self.sf.text_edit.append("Validating fstab...")
 
-        try:
-            subprocess.run(["systemctl", "daemon-reload"], check=True)
-            subprocess.run(["mount", "-a"], check=True)
-            self.sf.text_edit.append(
-                "Fstab validation successful, enjoy your mount :D..."
-            )
-            return True
+    #     try:
+    #         subprocess.run(["systemctl", "daemon-reload"], check=True)
+    #         subprocess.run(["mount", "-a"], check=True)
+    #         self.sf.text_edit.append(
+    #             "Fstab validation successful, enjoy your mount :D..."
+    #         )
+    #         return True
 
-        except subprocess.CalledProcessError as e:
-            self.sf.text_edit.append("Fstab validation failed...")
-            self.sf.text_edit.append(f"Error: {e}")
-            self.sf.text_edit.append("Restoring fstab...")
-            self.restore_fstab()
-            self.sf.text_edit.append(
-                "Please manually verify /etc/fstab before restart the computer"
-            )
-            return False
+    #     except subprocess.CalledProcessError as e:
+    #         self.sf.text_edit.append("Fstab validation failed...")
+    #         self.sf.text_edit.append(f"Error: {e}")
+    #         self.sf.text_edit.append("Restoring fstab...")
+    #         self.restore_fstab()
+    #         self.sf.text_edit.append(
+    #             "Please manually verify /etc/fstab before restart the computer"
+    #         )
+    #         return False
 
     def restore_fstab(self):
         backup_path = Path(f"{self.sf.fstab_location}.bak")
