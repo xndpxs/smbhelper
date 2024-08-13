@@ -37,11 +37,14 @@ class SmbHelper(QMainWindow, Ui_SMBWindow):
             QApplication.processEvents()
             self.fstab_config.fstab_modify()
             QApplication.processEvents()
-        if not self.fstab_config.fstab_validation():
-            QApplication.processEvents()
-            self.samba_config.delete_created_files()
-            QApplication.processEvents()
-        self.button_apply.setEnabled(True)
+        else:
+            self.button_apply.setEnabled(True)
+
+        # if not self.fstab_config.fstab_validation():
+        #     QApplication.processEvents()
+        #     self.samba_config.delete_created_files()
+        #     QApplication.processEvents()
+        # self.button_apply.setEnabled(True)
 
         # FUNCTIONS
 
