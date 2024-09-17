@@ -1,9 +1,14 @@
 import sys
-from PySide6 import QtWidgets
-from smbfunctions.smbhelper_functions import SmbHelper
+from PySide6.QtWidgets import QApplication
+from views.smb_view import SmbView
 
-app = QtWidgets.QApplication(sys.argv)
-window = SmbHelper(app)
-window.show()
 
-app.exec()
+def main():
+    app = QApplication(sys.argv)
+    window = SmbView(app)
+    window.show()
+    sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()
