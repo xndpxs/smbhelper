@@ -99,7 +99,7 @@ class SmbView(QMainWindow, Ui_SMBWindow):
             f"{self.config_data.samba_ip}_credentials"
         )
         self.config_data.credentials_filepath = f"{self.config_data.samba_path_credentials}/{self.config_data.credentials_filename}"
-        return True  # You can add error handling if needed
+        return True
 
     def validate_inputs(self):
         """Validates the user inputs."""

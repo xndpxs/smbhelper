@@ -1,4 +1,3 @@
-import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -37,6 +36,7 @@ class FstabController:
                 f"rw,x-systemd.automount,credentials={config_data.credentials_filepath},"
                 f"uid={config_data.uid},gid={config_data.gid} 0 0"
             )
+            self.text_edit.append("Fstab entry prepared successfully.")
             return True
         except KeyError:
             self.text_edit.append(
