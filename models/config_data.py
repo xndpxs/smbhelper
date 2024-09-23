@@ -29,3 +29,4 @@ class ConfigData:
         self.fstab_entry = ""
         self.uid = None
         self.gid = None
+        self.mount_point_created = False
