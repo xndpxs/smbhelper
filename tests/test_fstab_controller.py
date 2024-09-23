@@ -19,7 +19,6 @@ def setup_fstab_controller():
         samba_domain="",
         samba_path="/mnt/test",
     )
-
     config_data.fstab_location = "/etc/fstab"
     config_data.credentials_filepath = "/etc/samba/credentials/test_credentials"
     return controller, config_data, text_edit
