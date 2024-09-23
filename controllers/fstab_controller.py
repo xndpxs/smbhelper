@@ -141,6 +141,7 @@ class FstabController:
                 return False
         else:
             self.text_edit.append("Mount point already exists.")
+            config_data.mount_point_created = False
             return True
 
     def validate_and_mount(self, config_data):
