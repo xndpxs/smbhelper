@@ -6,6 +6,8 @@
 
 SMBHelper is a utility designed to simplify the automatic mounting of Samba shares following the guidelines outlined in the Arch Wiki. This tool streamlines the process of mounting Samba shares by providing an intuitive interface for mounting these shares on the local system.
 
+execute with `sudo "$(pipenv --py)" main.py`
+
 ### To-Do Activities
 
 The project will work on the next activities:
